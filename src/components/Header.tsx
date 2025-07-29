@@ -20,8 +20,10 @@ export const Header = () => {
 
   const mainNavItems = [
     { name: "Home", path: "/", icon: BookOpen },
+    { name: "Student Portal", path: "/portal", icon: GraduationCap },
     { name: "Medical Library", path: "/medical", icon: GraduationCap },
     { name: "Pharmacology", path: "/pharmacology", icon: Pill },
+    { name: "Calculators", path: "/calculators", icon: BookOpen },
     { name: "Books & Journals", path: "/books", icon: BookOpen },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" }
