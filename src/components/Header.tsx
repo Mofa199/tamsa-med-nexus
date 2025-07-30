@@ -26,7 +26,8 @@ export const Header = () => {
     { name: "Calculators", path: "/calculators", icon: BookOpen },
     { name: "Books & Journals", path: "/books", icon: BookOpen },
     { name: "About", path: "/about" },
-    { name: "Contact", path: "/contact" }
+    { name: "Contact", path: "/contact" },
+    { name: "FAQ", path: "/faq" }
   ];
 
   return (
