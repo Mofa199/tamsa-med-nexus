@@ -85,6 +85,52 @@ const Calculators = () => {
     }
   };
 
+  // IV Flow Rate Calculator
+  const [ivData, setIvData] = useState({
+    volume: "",
+    time: "",
+    dropFactor: "15",
+    result: ""
+  });
+
+  // Body Surface Area Calculator
+  const [bsaData, setBsaData] = useState({
+    height: "",
+    weight: "",
+    result: ""
+  });
+
+  const calculateIVRate = () => {
+    const volume = parseFloat(ivData.volume);
+    const time = parseFloat(ivData.time);
+    const dropFactor = parseFloat(ivData.dropFactor);
+    
+    if (volume && time && dropFactor) {
+      const dropsPerMin = (volume * dropFactor) / (time * 60);
+      const mlPerHour = volume / time;
+      
+      setIvData({
+        ...ivData,
+        result: `Flow rate: ${dropsPerMin.toFixed(0)} drops/min | ${mlPerHour.toFixed(1)} mL/hr`
+      });
+    }
+  };
+
+  const calculateBSA = () => {
+    const height = parseFloat(bsaData.height);
+    const weight = parseFloat(bsaData.weight);
+    
+    if (height && weight) {
+      // Mosteller formula
+      const bsa = Math.sqrt((height * weight) / 3600);
+      
+      setBsaData({
+        ...bsaData,
+        result: `Body Surface Area: ${bsa.toFixed(2)} m²`
+      });
+    }
+  };
+
   const calculators = [
     {
       id: "bmi",
@@ -95,7 +141,7 @@ const Calculators = () => {
     },
     {
       id: "dosage",
-      title: "Drug Dosage Calculator",
+      title: "Drug Dosage Calculator", 
       description: "Calculate medication dosages based on weight",
       icon: "💊",
       category: "Pharmacy"
@@ -106,6 +152,20 @@ const Calculators = () => {
       description: "Estimate kidney function using Cockcroft-Gault",
       icon: "🫘",
       category: "Medical"
+    },
+    {
+      id: "iv-rate",
+      title: "IV Flow Rate Calculator",
+      description: "Calculate IV drip rates and flow rates",
+      icon: "💧",
+      category: "Medical"
+    },
+    {
+      id: "bsa",
+      title: "Body Surface Area",
+      description: "Calculate BSA using Mosteller formula",
+      icon: "📏",
+      category: "General"
     }
   ];
 
@@ -139,13 +199,13 @@ const Calculators = () => {
           <Tabs defaultValue="bmi" className="space-y-8">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold mb-4">Available Calculators</h2>
-              <TabsList className="grid grid-cols-3 w-full max-w-2xl mx-auto">
-                {calculators.map((calc) => (
-                  <TabsTrigger key={calc.id} value={calc.id} className="flex flex-col items-center gap-1 p-3">
-                    <span className="text-lg">{calc.icon}</span>
-                    <span className="text-xs">{calc.title}</span>
-                  </TabsTrigger>
-                ))}
+            <TabsList className="grid grid-cols-5 w-full max-w-4xl mx-auto">
+              {calculators.map((calc) => (
+                <TabsTrigger key={calc.id} value={calc.id} className="flex flex-col items-center gap-1 p-3">
+                  <span className="text-lg">{calc.icon}</span>
+                  <span className="text-xs">{calc.title}</span>
+                </TabsTrigger>
+              ))}
               </TabsList>
             </div>
 
@@ -325,6 +385,116 @@ const Calculators = () => {
                       <p className="font-semibold">{creatinineData.result}</p>
                       <p className="text-sm text-muted-foreground mt-1">
                         Normal range: 90-120 mL/min for healthy adults
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* IV Flow Rate Calculator */}
+            <TabsContent value="iv-rate">
+              <Card className="max-w-2xl mx-auto">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Droplets className="w-5 h-5" />
+                    IV Flow Rate Calculator
+                  </CardTitle>
+                  <CardDescription>
+                    Calculate IV drip rates and infusion rates
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="volume">Total Volume (mL)</Label>
+                    <Input
+                      id="volume"
+                      type="number"
+                      placeholder="1000"
+                      value={ivData.volume}
+                      onChange={(e) => setIvData({...ivData, volume: e.target.value})}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="time">Infusion Time (hours)</Label>
+                    <Input
+                      id="time"
+                      type="number"
+                      placeholder="8"
+                      value={ivData.time}
+                      onChange={(e) => setIvData({...ivData, time: e.target.value})}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="dropFactor">Drop Factor (drops/mL)</Label>
+                    <select 
+                      className="w-full p-2 border rounded-md"
+                      value={ivData.dropFactor}
+                      onChange={(e) => setIvData({...ivData, dropFactor: e.target.value})}
+                    >
+                      <option value="10">10 drops/mL (Macrodrip)</option>
+                      <option value="15">15 drops/mL (Macrodrip)</option>
+                      <option value="20">20 drops/mL (Macrodrip)</option>
+                      <option value="60">60 drops/mL (Microdrip)</option>
+                    </select>
+                  </div>
+                  <Button onClick={calculateIVRate} className="w-full">
+                    <Calculator className="w-4 h-4 mr-2" />
+                    Calculate IV Rate
+                  </Button>
+                  {ivData.result && (
+                    <div className="p-4 bg-secondary rounded-lg">
+                      <p className="font-semibold">{ivData.result}</p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* BSA Calculator */}
+            <TabsContent value="bsa">
+              <Card className="max-w-2xl mx-auto">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Scale className="w-5 h-5" />
+                    Body Surface Area Calculator
+                  </CardTitle>
+                  <CardDescription>
+                    Calculate BSA using the Mosteller formula
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="bsa-height">Height (cm)</Label>
+                      <Input
+                        id="bsa-height"
+                        type="number"
+                        placeholder="175"
+                        value={bsaData.height}
+                        onChange={(e) => setBsaData({...bsaData, height: e.target.value})}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="bsa-weight">Weight (kg)</Label>
+                      <Input
+                        id="bsa-weight"
+                        type="number"
+                        placeholder="70"
+                        value={bsaData.weight}
+                        onChange={(e) => setBsaData({...bsaData, weight: e.target.value})}
+                      />
+                    </div>
+                  </div>
+                  <Button onClick={calculateBSA} className="w-full">
+                    <Calculator className="w-4 h-4 mr-2" />
+                    Calculate BSA
+                  </Button>
+                  {bsaData.result && (
+                    <div className="p-4 bg-secondary rounded-lg">
+                      <p className="font-semibold">{bsaData.result}</p>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Normal adult BSA: 1.5-2.0 m²
                       </p>
                     </div>
                   )}

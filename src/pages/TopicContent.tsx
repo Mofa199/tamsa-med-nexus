@@ -369,7 +369,9 @@ Understanding cardiovascular anatomy is essential for:
                               </p>
                             </div>
                           </div>
-                          <Button>
+                          <Button onClick={() => {
+                            alert(`Downloading ${pdf.title}...`);
+                          }}>
                             <Download className="w-4 h-4 mr-2" />
                             Download
                           </Button>

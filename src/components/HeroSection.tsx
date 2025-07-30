@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 
 export const HeroSection = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [showResults, setShowResults] = useState(false);
 
   const stats = [
     { icon: BookOpen, label: "Digital Resources", value: "5,000+" },

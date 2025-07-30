@@ -314,11 +314,17 @@ const Books = () => {
                             </div>
 
                             <div className="flex gap-2">
-                              <Button className="flex-1">
+                              <Button className="flex-1" onClick={() => {
+                                // Simulate download
+                                alert(`Downloading ${book.title}...`);
+                              }}>
                                 <Download className="w-4 h-4 mr-2" />
                                 Download
                               </Button>
-                              <Button variant="outline" size="icon">
+                              <Button variant="outline" size="icon" onClick={() => {
+                                // Simulate preview
+                                alert(`Opening preview for ${book.title}...`);
+                              }}>
                                 <Eye className="w-4 h-4" />
                               </Button>
                             </div>
@@ -361,11 +367,15 @@ const Books = () => {
                           </div>
                         </div>
                         <div className="flex flex-col gap-2">
-                          <Button>
+                          <Button onClick={() => {
+                            alert(`Downloading ${book.title}...`);
+                          }}>
                             <Download className="w-4 h-4 mr-2" />
                             Download
                           </Button>
-                          <Button variant="outline">
+                          <Button variant="outline" onClick={() => {
+                            alert(`Opening preview for ${book.title}...`);
+                          }}>
                             <Eye className="w-4 h-4 mr-2" />
                             Preview
                           </Button>
