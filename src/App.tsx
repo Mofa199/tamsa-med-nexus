@@ -22,6 +22,7 @@ import ModuleTopics from "./pages/ModuleTopics";
 import TopicContent from "./pages/TopicContent";
 import Calculators from "./pages/Calculators";
 import Admin from "./pages/Admin";
+import SearchPage from "./pages/Search";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => (
             <Route path="/calculators" element={<ProtectedRoute><Calculators /></ProtectedRoute>} />
             <Route path="/books" element={<ProtectedRoute><Books /></ProtectedRoute>} />
             <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+            <Route path="/search" element={<ProtectedRoute><SearchPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

@@ -1,18 +1,24 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { supabase, getCurrentUser } from '@/lib/supabase';
-import { User } from '@supabase/supabase-js';
+import { apiClient } from '@/lib/api';
+import { useNavigate } from 'react-router-dom';
+
+// Define a type for our user object
+interface User {
+  id: number;
+  email: string;
+  name: string;
+  role?: string;
+}
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   isAuthenticated: boolean;
+  login: (email, password) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType>({
-  user: null,
-  loading: true,
-  isAuthenticated: false,
-});
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
@@ -25,29 +31,56 @@ export const useAuth = () => {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Get initial user
-    getCurrentUser().then((user) => {
-      setUser(user);
-      setLoading(false);
-    });
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user ?? null);
+    const checkUser = async () => {
+      try {
+        const currentUser = await apiClient.getCurrentUser();
+        setUser(currentUser);
+      } catch (error) {
+        console.error("Failed to get current user", error);
+      } finally {
         setLoading(false);
       }
-    );
-
-    return () => subscription.unsubscribe();
+    };
+    checkUser();
   }, []);
+
+  const login = async (email, password) => {
+    try {
+      setLoading(true);
+      const loggedInUser = await apiClient.login(email, password);
+      setUser(loggedInUser);
+      navigate('/student'); // Redirect to a protected route after login
+    } catch (error) {
+      console.error("Login failed", error);
+      // You might want to show an error to the user here
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      setLoading(true);
+      await apiClient.logout();
+      setUser(null);
+      navigate('/login'); // Redirect to login page after logout
+    } catch (error) {
+      console.error("Logout failed", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const value = {
     user,
     loading,
     isAuthenticated: !!user,
+    login,
+    logout,
   };
 
   return (
