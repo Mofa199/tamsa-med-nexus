@@ -1,0 +1,114 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "test@example.com",
+      "password": "password123",
+      "name": "Test User"
+    },
+    {
+      "id": 2,
+      "email": "admin@example.com",
+      "password": "adminpassword",
+      "name": "Admin User",
+      "role": "admin"
+    }
+  ],
+  "student_types": [
+    { "id": "medical", "name": "Medical Students" },
+    { "id": "nursing", "name": "Nursing Students" },
+    { "id": "pharmacy", "name": "Pharmacy Students" }
+  ],
+  "modules": [
+    { "id": "anesthesiology", "name": "Anesthesiology", "student_type": "medical" },
+    { "id": "surgery", "name": "Surgery", "student_type": "medical" },
+    { "id": "pharmacology", "name": "Pharmacology", "student_type": "pharmacy" }
+  ],
+  "topics": [
+    {
+      "id": "normal-intubation",
+      "module_id": "anesthesiology",
+      "title": "Normal Intubation",
+      "content": [
+        {
+          "instrument": "Face Mask",
+          "definition": "A device that covers the nose and mouth to deliver oxygen or anesthetic gases.",
+          "types": ["Simple face mask", "Venturi mask", "Non-rebreather mask"],
+          "uses": "Preoxygenation, oxygenation during short procedures, or in emergency resuscitation.",
+          "indications": "Respiratory distress, preoxygenation before intubation, conscious sedation.",
+          "contraindications": "Facial trauma, inability to maintain airway.",
+          "effects": "Improves oxygenation.",
+          "pediatric_dose": "Adjusted by size; pediatric masks are available."
+        },
+        {
+          "instrument": "Endotracheal Tube (ETT)",
+          "definition": "A flexible plastic tube inserted into the trachea to maintain a patent airway.",
+          "types": ["Cuffed", "uncuffed", "oral", "nasal", "reinforced", "double-lumen"],
+          "uses": "Mechanical ventilation, general anesthesia, airway protection.",
+          "indications": "Respiratory failure, surgery requiring GA, airway obstruction.",
+          "contraindications": "Upper airway pathology, relative in facial trauma (consider alternative airway).",
+          "effects": "Secures airway, allows for controlled ventilation.",
+          "adult_size": "7.0–8.5 mm internal diameter (ID)",
+          "pediatric_size": "(Age/4) + 4 (uncuffed); (Age/4) + 3.5 (cuffed)",
+          "dose_parameters": "Ensure cuff pressure <30 cm H₂O"
+        },
+        {
+          "instrument": "Oropharyngeal Airway (OPA)",
+          "definition": "Curved plastic device to keep the airway open by preventing the tongue from covering the epiglottis.",
+          "types": ["Guedel", "Berman"],
+          "uses": "Maintaining airway in unconscious patients.",
+          "indications": "Airway obstruction due to tongue, during bag-valve-mask ventilation.",
+          "contraindications": "Conscious or semi-conscious patients (risk of gagging/vomiting).",
+          "effects": "Facilitates ventilation.",
+          "sizing": "Measured from corner of mouth to angle of mandible."
+        },
+        {
+          "instrument": "Nasopharyngeal Airway (NPA)",
+          "definition": "A soft rubber/plastic tube inserted through the nostril into the nasopharynx.",
+          "uses": "Semi-conscious patients with intact gag reflex.",
+          "indications": "Upper airway obstruction, during bagging where OPA isn’t tolerated.",
+          "contraindications": "Basilar skull fracture, nasal trauma.",
+          "effects": "Maintains airway patency.",
+          "size_selection": "Based on diameter (usually 6–7 mm ID in adults); length from nose to earlobe."
+        },
+        {
+          "instrument": "Laryngoscope",
+          "definition": "An instrument used to visualize the larynx for intubation.",
+          "types": ["Macintosh (curved)", "Miller (straight)", "video laryngoscopes"],
+          "uses": "Assists in ETT placement.",
+          "indications": "Endotracheal intubation.",
+          "contraindications": "Severe airway trauma (relative).",
+          "effects": "Visualizes glottis for safe intubation.",
+          "pediatric_considerations": "Miller blades more common in neonates/infants."
+        }
+      ],
+      "references": ["Miller's Anesthesia, 9th Edition", "Morgan & Mikhail's Clinical Anesthesiology, 7th Edition"],
+      "flashcards": [
+        { "question": "What is the primary use of a Face Mask?", "answer": "Preoxygenation and oxygenation during short procedures." },
+        { "question": "What is the formula for pediatric ETT size (uncuffed)?", "answer": "(Age/4) + 4" }
+      ],
+      "videos": ["https://www.youtube.com/watch?v=example1", "https://www.youtube.com/watch?v=example2"],
+      "mnemonics": "LEMON: Look externally, Evaluate 3-3-2, Mallampati score, Obstruction, Neck mobility."
+    }
+  ],
+  "drugs": [
+    {
+      "id": "propofol",
+      "name": "Propofol",
+      "category": "Anesthetics",
+      "mechanism": "Global CNS inhibition, likely through potentiation of GABA-A receptor activity.",
+      "indications": "Induction and maintenance of general anesthesia, sedation.",
+      "contraindications": "Allergy to propofol, egg or soy products."
+    },
+    {
+      "id": "aspirin",
+      "name": "Aspirin",
+      "category": "NSAIDs",
+      "mechanism": "Irreversibly inhibits COX-1 and COX-2 enzymes.",
+      "indications": "Pain, fever, inflammation, prevention of blood clots.",
+      "contraindications": "Bleeding disorders, allergy to NSAIDs."
+    }
+  ],
+  "books": [],
+  "journals": []
+}
